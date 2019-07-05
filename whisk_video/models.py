@@ -73,24 +73,26 @@ class VideoSession(models.Model):
     whisker_colors = models.CharField(max_length=100, blank=True)
     param_face_choices = ((0, 'left'), (1, 'right'), (2, 'top'), (3, 'bottom'),)
     param_face_side = models.IntegerField(null=True, blank=True,
-        choices=param_face_choices,
+        choices=param_face_choices, default=1,
     )
     
     ## Parameters
     # Relating to edging
-    param_edge_lumthresh = models.IntegerField(null=True, blank=True)
+    param_edge_lumthresh = models.IntegerField(null=True, blank=True, default=50)
     param_edge_split_iters = models.IntegerField(null=True, blank=True,
-        default=5)
+        default=12)
 
-    param_edge_x0 = models.IntegerField(null=True, blank=True)
-    param_edge_x1 = models.IntegerField(null=True, blank=True)
+    # ROI for edge detection, leaving one without default to trigger manual setting
+    param_edge_x0 = models.IntegerField(null=True, blank=True, default=0)
+    param_edge_x1 = models.IntegerField(null=True, blank=True, default=500)
     param_edge_y0 = models.IntegerField(null=True, blank=True)
-    param_edge_y1 = models.IntegerField(null=True, blank=True)
+    param_edge_y1 = models.IntegerField(null=True, blank=True, default=550)
 
-    param_edge_crop_x0 = models.IntegerField(null=True, blank=True)
-    param_edge_crop_x1 = models.IntegerField(null=True, blank=True)
-    param_edge_crop_y0 = models.IntegerField(null=True, blank=True)
-    param_edge_crop_y1 = models.IntegerField(null=True, blank=True)
+    # How to crop the edges (default: not very)
+    param_edge_crop_x0 = models.IntegerField(null=True, blank=True, default=0)
+    param_edge_crop_x1 = models.IntegerField(null=True, blank=True, default=640)
+    param_edge_crop_y0 = models.IntegerField(null=True, blank=True, default=0)
+    param_edge_crop_y1 = models.IntegerField(null=True, blank=True, default=550)
     
     # Relating to follicle
     param_fol_x0 = models.IntegerField(null=True, blank=True)
