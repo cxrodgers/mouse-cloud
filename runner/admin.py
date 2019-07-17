@@ -84,9 +84,18 @@ class OptoSessionInline(admin.StackedInline):
     model = OptoSession
     
     # If fields unspecified, all will be shown
-    #~ fields = ('notes', 'sham', 'target', 'target_orientation',
-        #~ 'start_power', 'stop_power', 'wavelength', 'fiber_diameter',
-    #~ )
+    # Listing everything other than behavioral session, which breaks rendering
+    fields = (
+        'sham',
+        'target',
+        'start_power',
+        'stop_power',
+        'wavelength',
+        'target_orientation',
+        'fiber_diameter',
+        'notes',
+        'position_notes',
+    )
     
     # Put it on the opto tab
     suit_classes = 'suit-tab suit-tab-opto'
@@ -168,8 +177,12 @@ class GrandSessionAdmin(admin.ModelAdmin):
     #~ list_filter = ['mouse', 'board', 'box']
     #~ ordering = ['-date_time_start']
     
-    inlines = [OptoSessionInline, VideoSessionInline, NeuralSessionInline,
-        BehavioralSessionInline]
+    inlines = [
+        OptoSessionInline, 
+        VideoSessionInline, 
+        NeuralSessionInline,
+        BehavioralSessionInline,
+    ]
     
     # Tagging
     # https://django-taggit.readthedocs.io/en/latest/admin.html

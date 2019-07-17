@@ -8,9 +8,21 @@ class NeuralSessionInline(admin.StackedInline):
     model = neural_sessions.models.NeuralSession
     
     # If fields unspecified, all are displayed
-    #~ fields = (
-        #~ 'name', 'sort_name',
-    #~ )
+    fields = (
+        'name',
+        'data_directory',
+        'sort_name',
+        'recording_numbers',
+        'adapter',
+        'electrode',
+        'manipulator_angle',
+        'z_touch',
+        'z_final',
+        'z_withdraw',
+        'exclude_channels',
+        'notes',
+        'channel_quality_notes',
+    )
     
     suit_classes = 'suit-tab suit-tab-neural'
 
