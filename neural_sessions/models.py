@@ -39,11 +39,13 @@ class NeuralSession(models.Model):
 
     ## Links
     # Link it to a behavioral session
-    bsession = models.ForeignKey(runner.models.Session, null=True, blank=True)
+    bsession = models.ForeignKey(
+        runner.models.Session, null=True, blank=True, on_delete=models.PROTECT)
 
     # Link to GrandSession
     grand_session = models.OneToOneField(
-        runner.models.GrandSession, null=True, blank=True)
+        runner.models.GrandSession, null=True, blank=True, 
+        on_delete=models.PROTECT)
 
     
     ## Online notes

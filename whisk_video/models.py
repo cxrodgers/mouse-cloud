@@ -19,11 +19,13 @@ class VideoSession(models.Model):
     # Not possible to link to multiple behavioral sessions
     # Probably this would be handled by creating redundant
     # VideoSessions
-    bsession = models.ForeignKey(runner.models.Session, blank=True, null=True)
+    bsession = models.ForeignKey(
+        runner.models.Session, blank=True, null=True, on_delete=models.PROTECT)
 
     # Link to GrandSession
     grand_session = models.OneToOneField(
-        runner.models.GrandSession, null=True, blank=True)
+        runner.models.GrandSession, null=True, blank=True, 
+        on_delete=models.PROTECT)
 
     # Parameters of the video
     frame_height = models.IntegerField(null=True, blank=True, default=550)

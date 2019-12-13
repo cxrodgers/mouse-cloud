@@ -68,7 +68,8 @@ class Mouse(models.Model):
     training_cohort = models.IntegerField(null=True, blank=True)
     
     # The mouse's cage, used for printing labels
-    cage = models.ForeignKey(BehaviorCage, null=True, blank=True)
+    cage = models.ForeignKey(
+        BehaviorCage, null=True, blank=True, on_delete=models.PROTECT)
     
     # Python params
     stimulus_set = models.CharField(max_length=50, blank=True)
@@ -250,15 +251,18 @@ class Session(models.Model):
     name = models.CharField(max_length=200, primary_key=True)
     
     # Which mouse it was
-    mouse = models.ForeignKey(Mouse, null=True, blank=True)
+    mouse = models.ForeignKey(
+        Mouse, null=True, blank=True, on_delete=models.PROTECT)
     
     # The logfile
     logfile = models.CharField(max_length=200, blank=True)
 
     # Where it physically took place
     # Note multiple boxes may share the same serial port
-    board = models.ForeignKey(Board, null=True, blank=True)
-    box = models.ForeignKey(Box, null=True, blank=True)
+    board = models.ForeignKey(
+        Board, null=True, blank=True, on_delete=models.PROTECT)
+    box = models.ForeignKey(
+        Box, null=True, blank=True, on_delete=models.PROTECT)
     
     # This is not necessary because it's part of box
     serial_port = models.CharField(max_length=50, null=True, blank=True)
@@ -305,7 +309,8 @@ class Session(models.Model):
         null=True, blank=True, verbose_name='Weight')
 
     # Link to GrandSession
-    grand_session = models.OneToOneField(GrandSession, null=True, blank=True)
+    grand_session = models.OneToOneField(
+        GrandSession, null=True, blank=True, on_delete=models.PROTECT)
 
     def __str__(self):
         if self.name:
@@ -353,8 +358,10 @@ class OptoSession(models.Model):
     Seems like this will always be OneToOne with Session. But this is
     an optional link, in case at some point we link these things differently.
     """
-    grand_session = models.OneToOneField(GrandSession, null=True, blank=True)
-    behavioral_session = models.OneToOneField(Session, null=True, blank=True)
+    grand_session = models.OneToOneField(
+        GrandSession, null=True, blank=True, on_delete=models.PROTECT)
+    behavioral_session = models.OneToOneField(
+        Session, null=True, blank=True, on_delete=models.PROTECT)
     target = models.CharField(max_length=50, blank=True)
     start_power = models.FloatField(null=True, blank=True)
     stop_power = models.FloatField(null=True, blank=True)
