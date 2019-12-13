@@ -88,7 +88,7 @@ def set_environment_variables(verbose=False):
     local_cache_name = os.path.join(cwd, 'local_cache')
     if os.path.exists(local_cache_name):
         # Load the local cache
-        with file(local_cache_name) as fi:
+        with open(local_cache_name) as fi:
             data = json.load(fi)
         
         # Extract data just for this branch
