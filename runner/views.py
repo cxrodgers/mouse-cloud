@@ -1,4 +1,6 @@
 from __future__ import absolute_import
+from builtins import zip
+from builtins import range
 from django.shortcuts import render
 from django.views.generic import CreateView, ListView
 from django.core.urlresolvers import reverse
@@ -83,11 +85,11 @@ def weight_plot(request):
         # Plot
         ax.plot(cohort_weights.values, marker='s', ls='-')
         ax.set_ylim((10, 30))
-        ax.set_yticks(range(10, 31, 2))
+        ax.set_yticks(list(range(10, 31, 2)))
         ax.grid()
         
         # Xticks are the formatted date
-        ax.set_xticks(range(len(cohort_weights)))
+        ax.set_xticks(list(range(len(cohort_weights))))
         labels = cohort_weights.index.format(
             formatter = lambda x: x.strftime('%m-%d'))
         ax.set_xticklabels(labels, rotation=45, size='medium')
@@ -138,7 +140,7 @@ def rewards_plot(request):
         if len(box_sessions) > 0:
             # Extract the calculated reward durations
             sessions_by_date = pandas.DataFrame.from_records(
-                box_sessions.values())[[
+                list(box_sessions.values()))[[
                 "date_time_start", "user_data_left_valve_mean", 
                 "user_data_right_valve_mean"]].dropna()
             
@@ -168,7 +170,7 @@ def rewards_plot(request):
             ax.plot(right_volume, '-s', color='g')
             
             # Ticklabels for the dates
-            ax.set_xticks(range(len(volumes)))
+            ax.set_xticks(list(range(len(volumes))))
             labels = volumes.index.format(
                 formatter = lambda x: x.strftime('%m-%d'))
             ax.set_xticklabels(labels, rotation=45, size='medium')

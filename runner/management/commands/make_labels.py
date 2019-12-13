@@ -1,4 +1,7 @@
 from __future__ import print_function
+from builtins import input
+from builtins import zip
+from builtins import range
 import numpy as np
 import labels
 from reportlab.graphics import shapes
@@ -14,20 +17,20 @@ class Command(NoArgsCommand):
             'which you need water restriction labels.\n'
             'Example: CR22 CR12 CR13\n'
         )
-        data = raw_input(prompt)
+        data = input(prompt)
         water_restriction_cage_name_l = data.split()
         
         prompt = ('Enter a list of cage names, separated by spaces, for'
             'which you need cage labels.\n'
             'Example: CR22 CR12 CR13\n'
         )
-        data = raw_input(prompt)
+        data = input(prompt)
         cage_card_cage_name_l = data.split()
         
         prompt = ('Enter the row to start printing on. Example: for the '
             'second from top row, enter 2: '
         )      
-        data = raw_input(prompt)
+        data = input(prompt)
         row_start = int(data)
         
         specs = labels.Specification(215.9, 279.4, 2, 15, 87.3, 16.9, corner_radius=2,
@@ -140,7 +143,7 @@ class Command(NoArgsCommand):
         sheet.partial_page(1, used_labels)
 
         # Add label for each cage
-        for cage_name, cage_specs in colony_specs.items():
+        for cage_name, cage_specs in list(colony_specs.items()):
             if cage_name in water_restriction_cage_name_l:
                 # Copy specs over
                 cage_specs2 = cage_specs.copy()

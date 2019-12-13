@@ -43,7 +43,7 @@ class Command(NoArgsCommand):
             'name', flat=True))
         sessions_to_add = bdf.loc[~bdf['session'].isin(sessions_in_db), :]
 
-        for idx, logfile in sessions_to_add['filename'].iteritems():
+        for idx, logfile in sessions_to_add['filename'].items():
             session_name = bdf.loc[idx, 'session']
             
             # Get the sandbox directory from the logfile

@@ -1,6 +1,8 @@
 from __future__ import print_function
 # Copy a mouse from the master database to mouse-cloud
 
+from builtins import input
+from builtins import str
 import pandas
 import sqlalchemy
 import runner.models
@@ -12,10 +14,10 @@ from django.core.management.base import NoArgsCommand
 class Command(NoArgsCommand):
     def handle_noargs(self, **options):
         # Which mouse to get and what info to assign
-        husbandry_name = raw_input('Enter husbandry name (e.g., 3126-3): ')
-        headplate_color = raw_input('Enter headplate color (e.g., RB): ')
-        training_name = raw_input('Enter training name (e.g., KF145): ')
-        training_number = int(raw_input('Enter training number (e.g., 145): '))
+        husbandry_name = input('Enter husbandry name (e.g., 3126-3): ')
+        headplate_color = input('Enter headplate color (e.g., RB): ')
+        training_name = input('Enter training name (e.g., KF145): ')
+        training_number = int(input('Enter training number (e.g., 145): '))
 
         # Connect to the master database
         master_credentials_path = os.path.expanduser(
@@ -104,13 +106,13 @@ class Command(NoArgsCommand):
             existing_mouse = qs.first()
 
             changes_made = False
-            for django_field_name, value in params.items():
+            for django_field_name, value in list(params.items()):
                 # Check whether value set correctly
                 existing_value = existing_mouse.__getattribute__(
                     django_field_name)
                 
                 if existing_value != value:
-                    resp = raw_input("warning: %s is %s not %s; set? [y/N]" % (django_field_name,
+                    resp = input("warning: %s is %s not %s; set? [y/N]" % (django_field_name,
                         str(existing_value), str(value)))
                     
                     if resp.upper() == 'Y':

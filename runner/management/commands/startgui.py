@@ -10,6 +10,10 @@ from __future__ import print_function
 # If True, do not poll arduinos before uploading or in the background
 # For whatever reason this is extremely slow when there are network problems
 # A network connection is likely still required to extract training params
+from builtins import filter
+from builtins import zip
+from builtins import str
+from builtins import range
 MINIMIZE_NETWORKING = False
 
 import sys
@@ -233,8 +237,8 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
                 else:
                     return False
             
-            sandboxes = filter(is_after_4am, sandboxes)
-            saved_sandboxes = filter(is_after_4am, saved_sandboxes)
+            sandboxes = list(filter(is_after_4am, sandboxes))
+            saved_sandboxes = list(filter(is_after_4am, saved_sandboxes))
         
             # Get the pushbutton
             qb = self.daily_plan_table.cellWidget(nrow, 6)
@@ -253,8 +257,8 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         # Poll attached boxes
         attached_arduinos = []
         attached_cameras = []
-        zobj = zip(self.relevant_box_names, self.relevant_box_arduinos,
-            self.relevant_box_cameras)
+        zobj = list(zip(self.relevant_box_names, self.relevant_box_arduinos,
+            self.relevant_box_cameras))
             
         for box_name, arduino, camera in zobj:
             if os.path.exists(arduino):

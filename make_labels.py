@@ -4,6 +4,8 @@ from __future__ import print_function
 # python ~/dev/mouse-cloud/manage.py shell
 
 
+from builtins import zip
+from builtins import range
 import numpy as np
 import labels
 from reportlab.graphics import shapes
@@ -121,7 +123,7 @@ for row in range(1, 5): # second number is the 1-based row to start on
 sheet.partial_page(1, used_labels)
 
 # Add label for each cage
-for cage_name, cage_specs in colony_specs.items():
+for cage_name, cage_specs in list(colony_specs.items()):
     if cage_name in water_restriction_cage_name_l:
         # Copy specs over
         cage_specs2 = cage_specs.copy()

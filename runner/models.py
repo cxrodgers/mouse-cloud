@@ -12,6 +12,8 @@ need to be strings, but perhaps it would be better to have allow other types
 
 from __future__ import unicode_literals
 
+from builtins import str
+from builtins import object
 import datetime
 from django.db import models
 from taggit.managers import TaggableManager
@@ -98,10 +100,10 @@ class Mouse(models.Model):
     def name_number(self):
         """Return the mouse's number: int(digits in the name)"""
         # Keep the ints
-        int_s = filter(lambda c: c in '0123456789', self.name)
+        int_s = [c for c in self.name if c in '0123456789']
         return int(int_s)
 
-    class Meta:
+    class Meta(object):
         ordering = ['name']
 
     def __str__(self):
@@ -173,7 +175,7 @@ class Box(models.Model):
     def __str__(self):
         return str(self.name)
     
-    class Meta:
+    class Meta(object):
         ordering = ['name']
 
 class Board(models.Model):
@@ -199,7 +201,7 @@ class Board(models.Model):
     def __str__(self):
         return str(self.name)
 
-    class Meta:
+    class Meta(object):
         ordering = ['name']
 
 class ArduinoProtocol(models.Model):
@@ -239,7 +241,7 @@ class GrandSession(models.Model):
     def __str__(self):
         return str(self.name)
 
-    class Meta:
+    class Meta(object):
         ordering = ['-name']
 
 class Session(models.Model):

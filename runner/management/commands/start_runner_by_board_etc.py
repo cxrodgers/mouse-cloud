@@ -1,6 +1,7 @@
 # Command to start a behavioral session taking user input from 
 # board, box, and mouse.
 
+from builtins import input
 import os
 import shutil
 import json
@@ -11,11 +12,11 @@ import runner.models
 
 def get_user_input_from_keyboard():
     """Get user to type the board, box, and mouse"""
-    board = raw_input("Enter board: ")
+    board = input("Enter board: ")
     board = board.upper().strip()
-    box = raw_input("Enter box: ")
+    box = input("Enter box: ")
     box = box.upper().strip()
-    mouse = raw_input("Enter mouse: ")
+    mouse = input("Enter mouse: ")
     mouse = mouse.upper().strip()
     
     return {
