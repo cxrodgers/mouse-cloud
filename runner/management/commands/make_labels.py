@@ -1,3 +1,4 @@
+from __future__ import print_function
 import numpy as np
 import labels
 from reportlab.graphics import shapes
@@ -33,7 +34,7 @@ class Command(NoArgsCommand):
             row_gap=0, column_gap=13.3)
 
         def draw_label(label, width, height, obj):
-            print obj
+            print(obj)
             try:
                 fillColor = obj['fillColor']
             except KeyError:

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from django.shortcuts import render
 from django.views.generic import CreateView, ListView
 from django.core.urlresolvers import reverse
@@ -18,7 +19,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.dates import date2num
 import pytz 
-import models
+from . import models
 
 # Interpret all times as Eastern
 tz = pytz.timezone('America/New_York')

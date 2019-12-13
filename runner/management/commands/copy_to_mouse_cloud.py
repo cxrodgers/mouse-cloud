@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Copy a mouse from the master database to mouse-cloud
 
 import pandas
@@ -48,7 +49,7 @@ class Command(NoArgsCommand):
             # Not sure if the '.date()' method is necessary here
             new_mouse_dob = mouse.manual_dob.date()
         else:
-            print "warning: cannot get dob"
+            print("warning: cannot get dob")
 
         # Get the cage name
         cage_name = cage_table.set_index('id').loc[mouse['cage_id'], 'name']
@@ -99,7 +100,7 @@ class Command(NoArgsCommand):
         # Check whether this mouse is already in the database
         qs = runner.models.Mouse.objects.filter(husbandry_name=mouse['name'])
         if len(qs) > 0:
-            print "mouse already exists; error checking"
+            print("mouse already exists; error checking")
             existing_mouse = qs.first()
 
             changes_made = False
@@ -125,14 +126,14 @@ class Command(NoArgsCommand):
             cage_qs = runner.models.BehaviorCage.objects.filter(name=cage_name)
             if len(cage_qs) == 0:
                 # Create cage
-                print "creating cage %s" % cage_name
+                print("creating cage %s" % cage_name)
                 new_cage = runner.models.BehaviorCage(
                     name=cage_name,
                     label_color='black',
                 )
                 new_cage.save()
             else:
-                print "found existing cage %s" % cage_name
+                print("found existing cage %s" % cage_name)
                 new_cage = cage_qs.first()
             
             # Create a new mouse with values copied from the old one

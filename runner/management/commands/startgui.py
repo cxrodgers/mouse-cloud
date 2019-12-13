@@ -5,6 +5,7 @@ position in the table somehow
 Or, reconnect all buttons after a rearrange
 
 """
+from __future__ import print_function
 
 # If True, do not poll arduinos before uploading or in the background
 # For whatever reason this is extremely slow when there are network problems
@@ -143,15 +144,15 @@ def call_external(mouse, board, box, **other_python_parameters):
         result, pid_string = probe_arduino_user(arduino)
     
         if result == 'in use':
-            print "cannot upload to box %s; in use by these PIDs: %s" % (
-                box, pid_string)
+            print("cannot upload to box %s; in use by these PIDs: %s" % (
+                box, pid_string))
             return
 
         elif result != 'not in use':
-            print "cannot upload to box %s: %s" % (box, result)
+            print("cannot upload to box %s: %s" % (box, result))
             return
     
-    print mouse, board, box, experimenter
+    print(mouse, board, box, experimenter)
     ArduFSM.Runner.start_runner_cli.main(mouse=mouse, board=board, box=box,
         experimenter=experimenter,
         **other_python_parameters)

@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Script to put new saved sessions into runmouse django
 
 import django
@@ -65,7 +66,7 @@ class Command(NoArgsCommand):
                     results = json.load(fp)   
             except (IOError, ValueError):
                 # no results
-                print "warning: cannot load results json in %s" % script_dir
+                print("warning: cannot load results json in %s" % script_dir)
                 results = {}
 
             # Manually put in some stuff for perfdf if not stored
@@ -83,7 +84,7 @@ class Command(NoArgsCommand):
                 # This happens when something went wrong, typically a 
                 # corrupted logfile
                 if data_available and len(tm) == 0:
-                    print "empty trial matrix for session %s, cannot put_new" % (session_name)
+                    print("empty trial matrix for session %s, cannot put_new" % (session_name))
                     continue
                 
                 if data_available:
@@ -140,7 +141,7 @@ class Command(NoArgsCommand):
                 mouse = runner.models.Mouse.objects.get(name=mouse_name)
             
             # Create the session
-            print "adding session %s to the database" % bdf.loc[idx, 'session']
+            print("adding session %s to the database" % bdf.loc[idx, 'session'])
             session = runner.models.Session(
                 name=bdf.loc[idx, 'session'],
                 mouse=mouse,

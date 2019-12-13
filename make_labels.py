@@ -1,3 +1,4 @@
+from __future__ import print_function
 # New version
 # Run like this:
 # python ~/dev/mouse-cloud/manage.py shell
@@ -12,7 +13,7 @@ specs = labels.Specification(215.9, 279.4, 2, 15, 87.3, 16.9, corner_radius=2,
     row_gap=0, column_gap=13.3)
 
 def draw_label(label, width, height, obj):
-    print obj
+    print(obj)
     try:
         fillColor = obj['fillColor']
     except KeyError:
