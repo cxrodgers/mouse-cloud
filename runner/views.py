@@ -13,7 +13,7 @@ import datetime
 import pandas
 from datetime import date, timedelta
 import numpy as np
-
+import io
 
 # I think there's a thread problem with importing pyplot here
 # Maybe if you specify matplotlib.use('Agg') it would be okay
@@ -105,9 +105,15 @@ def weight_plot(request):
         if len(missing_mice) > 0:
             ax.set_title('missing mice: %r' % missing_mice)
 
+
+    # Print to canvas
+    # https://stackoverflow.com/questions/49542459/error-in-django-when-using-matplotlib-examples
+    buf = io.BytesIO()
     canvas = FigureCanvas(f)
-    response = HttpResponse(content_type='image/png')
-    canvas.print_png(response)
+    canvas.print_png(buf)
+    response = HttpResponse(buf.getvalue(), content_type='image/png')
+    response['Content-Length'] = str(len(response.content))
+    
     return response
 
 def rewards_plot(request):
@@ -187,11 +193,13 @@ def rewards_plot(request):
             title = "{} (Blue = Left Pipe, Green = Right Pipe)".format(box.name)
             ax.set_title(title)
 
-    # Print to png
+    # Print to canvas
+    # https://stackoverflow.com/questions/49542459/error-in-django-when-using-matplotlib-examples
+    buf = io.BytesIO()
     canvas = FigureCanvas(f)
-    response = HttpResponse(content_type='image/png')
-    canvas.print_png(response)
+    canvas.print_png(buf)
+    response = HttpResponse(buf.getvalue(), content_type='image/png')
+    response['Content-Length'] = str(len(response.content))
+    
     return response
-
-
 
