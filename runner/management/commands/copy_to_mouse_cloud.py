@@ -9,10 +9,10 @@ import runner.models
 import os
 import json
 
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 
-class Command(NoArgsCommand):
-    def handle_noargs(self, **options):
+class Command(BaseCommand):
+    def handle(self, **options):
         # Which mouse to get and what info to assign
         husbandry_name = input('Enter husbandry name (e.g., 3126-3): ')
         headplate_color = input('Enter headplate color (e.g., RB): ')
@@ -22,7 +22,7 @@ class Command(NoArgsCommand):
         # Connect to the master database
         master_credentials_path = os.path.expanduser(
             '~/dev/HeroMouseColony/HeroMouseColony/local_cache')
-        with file(master_credentials_path) as fi:
+        with open(master_credentials_path) as fi:
             master_credentials_json = json.load(fi)
         master_credentials = master_credentials_json['heroku']['database_url']
         conn = sqlalchemy.create_engine(master_credentials)
