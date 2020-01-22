@@ -8,10 +8,10 @@ from reportlab.graphics import shapes
 import runner.models
 import os
 
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 
-class Command(NoArgsCommand):
-    def handle_noargs(self, **options):
+class Command(BaseCommand):
+    def handle(self, **options):
         # Get the cages
         prompt = ('Enter a list of cage names, separated by spaces, for'
             'which you need water restriction labels.\n'
