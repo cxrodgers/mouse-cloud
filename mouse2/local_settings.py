@@ -157,7 +157,7 @@ def generate_local_cache(force=False):
             "local cache already exists, delete %s" % local_cache_name)
     
     # Store
-    with file(local_cache_name, 'w') as fi:
+    with open(local_cache_name, 'w') as fi:
         json.dump(data, fi, indent=4)
 
 def set_environment_variables_if_not_on_heroku():
