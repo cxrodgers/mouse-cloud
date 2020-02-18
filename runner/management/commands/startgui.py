@@ -14,11 +14,11 @@ from builtins import filter
 from builtins import zip
 from builtins import str
 from builtins import range
-MINIMIZE_NETWORKING = False
+MINIMIZE_NETWORKING = True
 
 import sys
-from PyQt4 import QtCore, QtGui, uic
-from PyQt4.QtGui import QTableWidgetItem, QSpinBox, QComboBox, QPushButton
+from PyQt5 import QtCore, QtGui, uic, QtWidgets
+from PyQt5.QtWidgets import QTableWidgetItem, QSpinBox, QComboBox, QPushButton
 import os
 import runner.models
 import datetime
@@ -33,7 +33,7 @@ from django.core.management.base import BaseCommand
 
 def readlines_and_strip(filename):
     res = []
-    with file(filename) as fi:
+    with open(filename) as fi:
         lb_lines = fi.readlines()
 
     for line in lb_lines:
@@ -161,9 +161,9 @@ def call_external(mouse, board, box, **other_python_parameters):
         experimenter=experimenter,
         **other_python_parameters)
 
-class MyApp(QtGui.QMainWindow, Ui_MainWindow):
+class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
-        QtGui.QMainWindow.__init__(self)
+        QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
 
@@ -175,13 +175,11 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
     
         # Create Move Up and Move Down tools and hook them to methods
         # http://stackoverflow.com/questions/9166087/move-row-up-and-down-in-pyqt4
-        self.move_up_action = QtGui.QAction("Up", self)
-        self.connect(self.move_up_action, QtCore.SIGNAL('triggered()'), 
-            self.move_up)
+        self.move_up_action = QtWidgets.QAction("Up", self)
+        self.move_up_action.triggered.connect(self.move_up)
 
-        self.move_down_action = QtGui.QAction("Down", self)
-        self.connect(self.move_down_action, QtCore.SIGNAL('triggered()'), 
-            self.move_down)
+        self.move_down_action = QtWidgets.QAction("Down", self)
+        self.move_down_action.triggered.connect(self.move_down)
 
         # Move up and move down actions in the tool bar
         self.toolbar = self.addToolBar('Toolbar')
@@ -264,7 +262,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
             if os.path.exists(arduino):
                 attached_arduinos.append(arduino)
 
-            if os.path.exists(camera):
+            if camera is not None and os.path.exists(camera):
                 attached_cameras.append(camera)
         
         # Format into something like "ACM0 (B0 or B1)"
@@ -548,7 +546,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
 class Command(BaseCommand):
     def handle(self, **options):
-        app = QtGui.QApplication(sys.argv)
+        app = QtWidgets.QApplication(sys.argv)
         window = MyApp()
         window.show()
         sys.exit(app.exec_())
