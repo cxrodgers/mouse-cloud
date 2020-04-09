@@ -57,12 +57,12 @@ class Command(BaseCommand):
             path_mouse_name = sandbox_name.split('-')[-4]
             
             # Parse parameters
-            with file(os.path.join(script_dir, 'parameters.json')) as fp:
+            with open(os.path.join(script_dir, 'parameters.json')) as fp:
                 parameters = json.load(fp)
             
             # Parse results
             try:
-                with file(os.path.join(script_dir, 'logfiles', 'results')) as fp:
+                with open(os.path.join(script_dir, 'logfiles', 'results')) as fp:
                     results = json.load(fp)   
             except (IOError, ValueError):
                 # no results
