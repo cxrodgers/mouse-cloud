@@ -11,7 +11,7 @@ from django.utils import timezone
 from ArduFSM.plot import count_hits_by_type_from_trials_info
 import ArduFSM
 
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 
 
 
@@ -28,8 +28,8 @@ def split_once(path):
 
 
 
-class Command(NoArgsCommand):
-    def handle_noargs(self, **options):
+class Command(BaseCommand):
+    def handle(self, *args, **options):
         # get new records
         PATHS = MCwatch.behavior.db.get_paths()
         bdf = MCwatch.behavior.db.get_behavior_df()
