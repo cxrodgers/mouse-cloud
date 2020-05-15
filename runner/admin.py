@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Mouse, Box, Board, ArduinoProtocol, \
     PythonProtocol, Session, BehaviorCage, OptoSession, GrandSession
-from suit.admin import SortableModelAdmin
 from whisk_video.admin import VideoSessionInline
 from neural_sessions.admin import NeuralSessionInline
 
