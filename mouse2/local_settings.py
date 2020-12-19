@@ -100,23 +100,31 @@ def set_environment_variables(verbose=False):
             print("[local_settings] got information from cache")
 
     else:
+        # Get with heroku if possible, otherwise use None
+        try:
+            database_url = run_cmd(
+                'heroku config:get DATABASE_URL --remote %s' % remote_name)
+            secret_key = run_cmd(
+                'heroku config:get DJANGO_SECRET_KEY --remote %s' % remote_name)
+        except FileNotFoundError:
+            database_url = None
+            secret_key = None
+        
         data = {
-            'database_url': run_cmd(
-                'heroku config:get DATABASE_URL --remote %s' % remote_name),
-            'secret_key': run_cmd(
-                'heroku config:get DJANGO_SECRET_KEY --remote %s' % remote_name),
+            'database_url': database_url,
+            'secret_key': secret_key,
         }
 
         if verbose:
             print("[local_settings] got information from config:get")
 
     ## Set the environment variables accordingly
-    if os.environ.get('DATABASE_URL') is None:
+    if os.environ.get('DATABASE_URL') is None and data['database_url'] is not None:
         if verbose:
             print("[local_settings] set DATABASE_URL to %s..." % (
                 data['database_url'][:18]))
         os.environ.setdefault('DATABASE_URL', data['database_url'])
-    if os.environ.get('DJANGO_SECRET_KEY') is None:
+    if os.environ.get('DJANGO_SECRET_KEY') is None and data['secret_key'] is not None:
         if verbose:
             print("[local_settings] set DJANGO_SECRET_KEY to %s ..." % (
                 data['secret_key'][:5]))
